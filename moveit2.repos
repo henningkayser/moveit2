@@ -1,0 +1,35 @@
+# This file is intended for users who want to build MoveIt! from source.
+# Used with vcstool, users can download source of all packages of MoveIt!.
+repositories:
+  moveit2:
+    type: git
+    url: https://github.com/ros-planning/moveit2.git
+    version: master
+  moveit_msgs:
+    type: git
+    url: https://github.com/ros-planning/moveit_msgs.git
+    version: melodic-devel
+  moveit_resources:
+    type: git
+    url: https://github.com/ros-planning/moveit_resources.git
+    version: master
+  moveit_visual_tools:
+    type: git
+    url: https://github.com/ros-planning/moveit_visual_tools.git
+    version: melodic-devel
+  rviz_visual_tools:
+    type: git
+    url: https://github.com/PickNikRobotics/rviz_visual_tools
+    version: melodic-devel
+  geometric_shapes:
+    type: git
+    url: https://github.com/ros-planning/geometric_shapes.git
+    version: crystal-devel
+  srdfdom:
+    type: git
+    url: https://github.com/ros-planning/srdfdom.git
+    version: melodic-devel
+  moveit_tutorials:
+    type: git
+    url: https://github.com/ros-planning/moveit_tutorials.git
+    version: master

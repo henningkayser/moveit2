@@ -1,9 +1,9 @@
 # This file is intended for users who want to build MoveIt! from source.
 # Used with wstool, users can download source of all packages of MoveIt!.
 - git:
-    local-name: moveit
-    uri: https://github.com/ros-planning/moveit.git
-    version: melodic-devel
+    local-name: moveit2
+    uri: https://github.com/ros-planning/moveit2.git
+    version: master
 - git:
     local-name: moveit_msgs
     uri: https://github.com/ros-planning/moveit_msgs.git
@@ -23,7 +23,7 @@
 - git:
     local-name: geometric_shapes
     uri: https://github.com/ros-planning/geometric_shapes.git
-    version: melodic-devel
+    version: crystal-devel
 - git:
     local-name: srdfdom
     uri: https://github.com/ros-planning/srdfdom.git
@@ -31,5 +31,4 @@
 - git:
     local-name: moveit_tutorials
     uri: https://github.com/ros-planning/moveit_tutorials.git
-    version: melodic-devel
-
+    version: master
