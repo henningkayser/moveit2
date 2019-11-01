@@ -10,10 +10,6 @@
     uri: https://github.com/ros-planning/moveit2
     version: master
 - git:
-    local-name: geometric_shapes
-    uri: https://github.com/AcutronicRobotics/geometric_shapes
-    version: ros2
-- git:
     local-name: joint_state_publisher
     uri: https://github.com/ros/joint_state_publisher
     version: ros2-devel
@@ -23,6 +19,10 @@
     uri: https://github.com/PickNikRobotics/random_numbers
     version: ros2-devel
   # TODO(henningkayser): merge dependencies below into upstream pacages
+- git:
+    local-name: geometric_shapes
+    uri: https://github.com/PickNikRobotics/geometric_shapes
+    version: ros2
 - git:
     local-name: object_recognition_msgs
     uri: https://github.com/PickNikRobotics/object_recognition_msgs
