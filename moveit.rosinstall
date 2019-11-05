@@ -14,6 +14,7 @@
     uri: https://github.com/ros/joint_state_publisher
     version: ros2-devel
   # TODO(henningkayser): Change to 'ros-planning/ros2' once https://github.com/ros-planning/random_numbers/pull/18 is merged
+  # TODO(davetcoleman): Nov 2019 - Remove source dependency on joint_state_publisher once it has been released
 - git:
     local-name: random_numbers
     uri: https://github.com/PickNikRobotics/random_numbers
