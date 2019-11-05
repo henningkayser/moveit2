@@ -16,7 +16,7 @@ repositories:
     type: git
     url: https://github.com/PickNikRobotics/random_numbers
     version: ros2-devel
-  # TODO(henningkayser): merge dependencies below into upstream pacages
+  # TODO(henningkayser): merge dependencies below into upstream packages
   geometric_shapes:
     type: git
     url: https://github.com/PickNikRobotics/geometric_shapes
