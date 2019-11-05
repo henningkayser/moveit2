@@ -66,7 +66,7 @@ list(APPEND ${PROJECT_NAME}_INCLUDE_DIRS ${VERSION_FILE_PATH})
 # Create a directory at build/moveit_core/include/moveit
 file(MAKE_DIRECTORY "${VERSION_FILE_PATH}/moveit")
 
-# Version of MoveIt!,  hardcoded for now
+# Version of MoveIt,  hard coded for now
 # TODO: fetch this in a different manner
 set(${PROJECT_NAME}_VERSION "2.0.0")
 # Generate and install version.h
