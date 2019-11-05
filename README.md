@@ -3,7 +3,7 @@
 The MoveIt Motion Planning Framework for ROS 2
 
 We are currently working on the upcoming Beta version of MoveIt 2.
-More information about our roadmap and future milestones will be added soon.
+See the [MoveIt's website homepage](https://moveit.ros.org) for release dates and [this document](JAFAR's LINK) for our immediate migration progress.
 
 ### Build from Source
 
