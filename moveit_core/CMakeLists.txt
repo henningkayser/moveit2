@@ -89,7 +89,7 @@ set(THIS_PACKAGE_INCLUDE_DIRS
     utils/include
 )
 
-set(libraries
+set(THIS_PACKAGE_LIBRARIES
     moveit_exceptions
     moveit_background_processing
     moveit_kinematics_base
@@ -201,7 +201,7 @@ add_subdirectory(kinematics_metrics)
 add_subdirectory(dynamics_solver)
 
 ament_export_include_directories(include)
-ament_export_libraries(${libraries})
+ament_export_libraries(${THIS_PACKAGE_LIBRARIES})
 ament_export_dependencies(${THIS_PACKAGE_INCLUDE_DEPENDS})
 
 ament_package()
