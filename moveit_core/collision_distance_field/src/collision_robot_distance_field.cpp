@@ -299,7 +299,7 @@ bool CollisionRobotDistanceField::getSelfCollisions(const collision_detection::C
           }
 
           RCLCPP_DEBUG(LOGGER_COLLISION_ROBOT_DISTANCE_FIELD,
-                       ("Self collision detected for link %s ", con.body_name_1).c_str());
+                       "Self collision detected for link %s ", con.body_name_1.c_str());
 
           con.body_type_2 = collision_detection::BodyTypes::ROBOT_LINK;
           con.body_name_2 = "self";
@@ -890,7 +890,7 @@ DistanceFieldCacheEntryPtr CollisionRobotDistanceField::generateDistanceFieldCac
     {
       dfce->state_check_indices_.push_back(dfce->state_values_.size() - 1);
       RCLCPP_DEBUG(LOGGER_COLLISION_ROBOT_DISTANCE_FIELD,
-                   ("Non-group joint %p will be checked for state changes", *name_iter).c_str());
+                   "Non-group joint %p will be checked for state changes", (*name_iter).c_str());
     }
   }
 
@@ -1058,7 +1058,7 @@ void CollisionRobotDistanceField::addLinkBodyDecompositions(
     {
       RCLCPP_WARN(
           LOGGER_COLLISION_ROBOT_DISTANCE_FIELD,
-          ("Skipping model generation for link %s since it contains no geometries", link_models[i]->getName()).c_str());
+          "Skipping model generation for link %s since it contains no geometries", link_models[i]->getName().c_str());
       continue;
     }
 
