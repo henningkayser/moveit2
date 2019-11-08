@@ -551,7 +551,7 @@ void CollisionWorldDistanceField::updateDistanceObject(const std::string& id, Di
   else
   {
     RCLCPP_DEBUG(LOGGER_COLLISION_WORLD_DISTANCE_FIELD,
-                 ("Removing Object '%s' from CollisionWorldDistanceField", id).c_str());
+                 "Removing Object '%s' from CollisionWorldDistanceField", id.c_str());
     dfce->posed_body_point_decompositions_.erase(id);
   }
 }
