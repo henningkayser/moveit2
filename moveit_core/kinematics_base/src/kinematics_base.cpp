@@ -62,7 +62,6 @@ void KinematicsBase::storeValues(const moveit::core::RobotModel& robot_model, co
   for (const std::string& name : tip_frames)
     tip_frames_.push_back(removeSlash(name));
   setSearchDiscretization(search_discretization);
-  search_discretization_ = search_discretization;
 }
 
 void KinematicsBase::setValues(const std::string& robot_description, const std::string& group_name,
@@ -77,40 +76,14 @@ void KinematicsBase::setValues(const std::string& robot_description, const std::
   for (const std::string& name : tip_frames)
     tip_frames_.push_back(removeSlash(name));
   setSearchDiscretization(search_discretization);
-
-  // store deprecated values for backwards compatibility
-  search_discretization_ = search_discretization;
-  if (tip_frames_.size() == 1)
-    tip_frame_ = tip_frames_[0];
-  else
-    tip_frame_.clear();
-}
-
-void KinematicsBase::setValues(const std::string& robot_description, const std::string& group_name,
-                               const std::string& base_frame, const std::string& tip_frame,
-                               double search_discretization)
-{
-  setValues(robot_description, group_name, base_frame, std::vector<std::string>({ tip_frame }), search_discretization);
-}
-
-bool KinematicsBase::initialize(const std::string& robot_description, const std::string& group_name,
-                                const std::string& base_frame, const std::string& tip_frame,
-                                double search_discretization)
-{
-  return false;  // default implementation returns false
 }
 
 bool KinematicsBase::initialize(const std::string& robot_description, const std::string& group_name,
                                 const std::string& base_frame, const std::vector<std::string>& tip_frames,
                                 double search_discretization)
 {
-  // For IK solvers that do not support multiple tip frames, fall back to single pose call
-  if (tip_frames.size() == 1)
-  {
-    return initialize(robot_description, group_name, base_frame, tip_frames[0], search_discretization);
-  }
-
-  RCLCPP_ERROR(LOGGER_KINEMATICS_BASE, "This solver does not support multiple tip frames");
+  RCLCPP_ERROR(LOGGER_KINEMATICS_BASE, "IK plugin for group '%s' relies on deprecated API.",
+               group_name.c_str());
   return false;
 }
 
@@ -118,9 +91,8 @@ bool KinematicsBase::initialize(const moveit::core::RobotModel& robot_model, con
                                 const std::string& base_frame, const std::vector<std::string>& tip_frames,
                                 double search_discretization)
 {
-  RCLCPP_WARN(LOGGER_KINEMATICS_BASE, "IK plugin for group '%s' relies on deprecated API. "
-                                      "Please implement initialize(RobotModel, ...).",
-              group_name.c_str());
+  RCLCPP_ERROR(LOGGER_KINEMATICS_BASE, "IK plugin for group '%s' relies on deprecated API.",
+               group_name.c_str());
   return false;
 }
 
@@ -175,11 +147,7 @@ bool KinematicsBase::supportsGroup(const moveit::core::JointModelGroup* jmg, std
 }
 
 KinematicsBase::KinematicsBase()
-  : tip_frame_("DEPRECATED")
-  // help users understand why this variable might not be set
-  // (if multiple tip frames provided, this variable will be unset)
-  , search_discretization_(DEFAULT_SEARCH_DISCRETIZATION)
-  , default_timeout_(DEFAULT_TIMEOUT)
+  :default_timeout_(DEFAULT_TIMEOUT)
 {
   supported_methods_.push_back(DiscretizationMethods::NO_DISCRETIZATION);
 }
