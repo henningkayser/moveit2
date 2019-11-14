@@ -31,7 +31,7 @@ if(BUILD_TESTING)
     ${MOVEIT_LIB_NAME}
   )
 
-  ament_add_gtest(test_distance_field test/test_distance_field.cpp TIMEOUT 500)
+  ament_add_gtest(test_distance_field test/test_distance_field.cpp TIMEOUT 1500)
 
   target_link_libraries(test_distance_field
     ${MOVEIT_LIB_NAME}
