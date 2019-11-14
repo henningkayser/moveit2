@@ -73,7 +73,7 @@ if(BUILD_TESTING)
   )
 
   # As an executable, this benchmark is not run as a test by default
-  ament_add_gtest(test_robot_state_benchmark test/robot_state_benchmark.cpp)
+  ament_add_gtest(test_robot_state_benchmark test/robot_state_benchmark.cpp TIMEOUT 350)
     target_include_directories(test_robot_state_benchmark PUBLIC
     ${tf2_geometry_msgs_INCLUDE_DIRS}
     ${urdf_INCLUDE_DIRS}
