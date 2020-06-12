@@ -63,7 +63,8 @@ static const float END_EFFECTOR_REACHABLE_COLOR[4] = { 0.2, 1.0, 0.2, 1.0 };
 
 const std::string RobotInteraction::INTERACTIVE_MARKER_TOPIC = "robot_interaction_interactive_marker_topic";
 
-RobotInteraction::RobotInteraction(const moveit::core::RobotModelConstPtr& robot_model, const std::string& ns)
+RobotInteraction::RobotInteraction(const moveit::core::RobotModelConstPtr& robot_model,
+  const rclcpp::Node::SharedPtr& node, const std::string& ns)
   : robot_model_(robot_model), kinematic_options_map_(new KinematicOptionsMap)
 {
   topic_ = ns.empty() ? INTERACTIVE_MARKER_TOPIC : ns + "/" + INTERACTIVE_MARKER_TOPIC;

@@ -231,14 +231,14 @@ private:
 
   // Update RobotState using a generic interaction feedback message.
   // YOU MUST LOCK state_lock_ BEFORE CALLING THIS.
-  void updateStateGeneric(robot_state::RobotState* state, const GenericInteraction* g,
-                          const visualization_msgs::InteractiveMarkerFeedbackConstPtr* feedback,
+  void updateStateGeneric(moveit::core::RobotState* state, const GenericInteraction* g,
+                          visualization_msgs::msg::InteractiveMarkerFeedback::ConstSharedPtr* feedback,
                           StateChangeCallbackFn* callback);
 
   // Update RobotState for a new pose of an eef.
   // YOU MUST LOCK state_lock_ BEFORE CALLING THIS.
   void updateStateEndEffector(moveit::core::RobotState* state, const EndEffectorInteraction* eef,
-                              const geometry_msgs::Pose* pose, StateChangeCallbackFn* callback);
+                              const geometry_msgs::msg::Pose* pose, StateChangeCallbackFn* callback);
 
   // Update RobotState for a new joint position.
   // YOU MUST LOCK state_lock_ BEFORE CALLING THIS.
