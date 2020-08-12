@@ -40,7 +40,7 @@ ament_target_dependencies(${MOVEIT_LIB_NAME}
   tf2_geometry_msgs
 )
 
-if (BUILD_TESTING)
+if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
   ament_add_gtest(locked_robot_state_test test/locked_robot_state_test.cpp)
   target_link_libraries(locked_robot_state_test ${MOVEIT_LIB_NAME})
