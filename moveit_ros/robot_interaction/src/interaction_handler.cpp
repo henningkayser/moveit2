@@ -141,7 +141,8 @@ bool InteractionHandler::getPoseOffset(const JointInteraction& vj, geometry_msgs
   return false;
 }
 
-bool InteractionHandler::getLastEndEffectorMarkerPose(const EndEffectorInteraction& eef, geometry_msgs::msg::PoseStamped& ps)
+bool InteractionHandler::getLastEndEffectorMarkerPose(const EndEffectorInteraction& eef,
+                                                      geometry_msgs::msg::PoseStamped& ps)
 {
   boost::mutex::scoped_lock slock(pose_map_lock_);
   std::map<std::string, geometry_msgs::msg::PoseStamped>::iterator it = pose_map_.find(eef.eef_group);
@@ -307,7 +308,8 @@ void InteractionHandler::updateStateEndEffector(moveit::core::RobotState* state,
 
 // MUST hold state_lock_ when calling this!
 void InteractionHandler::updateStateJoint(moveit::core::RobotState* state, const JointInteraction* vj,
-                                          const geometry_msgs::msg::Pose* feedback_pose, StateChangeCallbackFn* callback)
+                                          const geometry_msgs::msg::Pose* feedback_pose,
+                                          StateChangeCallbackFn* callback)
 {
   Eigen::Isometry3d pose;
   tf2::fromMsg(*feedback_pose, pose);
@@ -389,13 +391,13 @@ bool InteractionHandler::transformFeedbackPose(
       catch (tf2::TransformException& e)
       {
         RCLCPP_ERROR(LOGGER, "Error transforming from frame '%s' to frame '%s'", tpose.header.frame_id.c_str(),
-                  planning_frame_.c_str());
+                     planning_frame_.c_str());
         return false;
       }
     else
     {
       RCLCPP_ERROR(LOGGER, "Cannot transform from frame '%s' to frame '%s' (no TF instance provided)",
-                tpose.header.frame_id.c_str(), planning_frame_.c_str());
+                   tpose.header.frame_id.c_str(), planning_frame_.c_str());
       return false;
     }
   }

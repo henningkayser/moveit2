@@ -75,7 +75,8 @@ public:
   /// The topic name on which the internal Interactive Marker Server operates
   static const std::string INTERACTIVE_MARKER_TOPIC;
 
-  RobotInteraction(const moveit::core::RobotModelConstPtr& robot_model, const rclcpp::Node::SharedPtr& node, const std::string& ns = "");
+  RobotInteraction(const moveit::core::RobotModelConstPtr& robot_model, const rclcpp::Node::SharedPtr& node,
+                   const std::string& ns = "");
   virtual ~RobotInteraction();
 
   const std::string& getServerTopic() const
@@ -183,7 +184,8 @@ private:
                          geometry_msgs::msg::Pose& control_to_eef_tf) const;
 
   void addEndEffectorMarkers(const InteractionHandlerPtr& handler, const EndEffectorInteraction& eef,
-                             visualization_msgs::msg::InteractiveMarker& im, bool position = true, bool orientation = true);
+                             visualization_msgs::msg::InteractiveMarker& im, bool position = true,
+                             bool orientation = true);
   void addEndEffectorMarkers(const InteractionHandlerPtr& handler, const EndEffectorInteraction& eef,
                              const geometry_msgs::msg::Pose& offset, visualization_msgs::msg::InteractiveMarker& im,
                              bool position = true, bool orientation = true);
