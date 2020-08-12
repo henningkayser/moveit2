@@ -473,7 +473,7 @@ void RobotInteraction::addInteractiveMarkers(const InteractionHandlerPtr& handle
       geometry_msgs::msg::PoseStamped pose;
       geometry_msgs::msg::Pose control_to_eef_tf;
       pose.header.frame_id = robot_model_->getModelFrame();
-      pose.header.stamp = rclcpp::Clock().now();
+      pose.header.stamp = node_->now();
       computeMarkerPose(handler, active_eef_[i], *s, pose.pose, control_to_eef_tf);
 
       std::string marker_name = getMarkerName(handler, active_eef_[i]);
@@ -514,7 +514,7 @@ void RobotInteraction::addInteractiveMarkers(const InteractionHandlerPtr& handle
     {
       geometry_msgs::msg::PoseStamped pose;
       pose.header.frame_id = robot_model_->getModelFrame();
-      pose.header.stamp = rclcpp::Clock().now();
+      pose.header.stamp = node_->now();
       pose.pose = tf2::toMsg(s->getGlobalLinkTransform(active_vj_[i].connecting_link));
       std::string marker_name = getMarkerName(handler, active_vj_[i]);
       shown_markers_[marker_name] = i;
@@ -573,26 +573,10 @@ void RobotInteraction::toggleMoveInteractiveMarkerTopic(bool enable)
       {
         std::string topic_name = int_marker_move_topics_[i];
         std::string marker_name = int_marker_names_[i];
-        
-        auto subscription_callback = [this, marker_name](geometry_msgs::msg::PoseStamped::ConstSharedPtr msg) {
-          std::map<std::string, std::size_t>::const_iterator it = shown_markers_.find(marker_name);
-          if (it != shown_markers_.end())
-          {
-            auto feedback = std::make_shared<visualization_msgs::msg::InteractiveMarkerFeedback>();
-            feedback->header = msg->header;
-            feedback->marker_name = marker_name;
-            feedback->pose = msg->pose;
-            feedback->event_type = visualization_msgs::msg::InteractiveMarkerFeedback::POSE_UPDATE;
-            processInteractiveMarkerFeedback(feedback);
-            {
-              boost::unique_lock<boost::mutex> ulock(marker_access_lock_);
-              int_marker_server_->setPose(marker_name, msg->pose, msg->header);  // move the interactive marker
-              int_marker_server_->applyChanges();
-            }
-          }
-        };
-        auto sub = node_->create_subscription<geometry_msgs::msg::PoseStamped>(topic_name, 1, subscription_callback);
-        int_marker_move_subscribers_.push_back(sub);
+        int_marker_move_subscribers_.push_back(node_->create_subscription<geometry_msgs::msg::PointStamped>(
+            topic_name, 1, [this, marker_name](const geometry_msgs::msg::PoseStamped::ConstSharedPtr msg) {
+              moveInteractiveMarker(marker_name, msg);
+            }));
       }
     }
   }
@@ -694,8 +678,28 @@ bool RobotInteraction::showingMarkers(const InteractionHandlerPtr& handler)
   return true;
 }
 
+void RobotInteraction::moveInteractiveMarker(const std::string& name,
+                                             const geometry_msgs::msg::PoseStamped::ConstSharedPtr msg)
+{
+  std::map<std::string, std::size_t>::const_iterator it = shown_markers_.find(name);
+  if (it != shown_markers_.end())
+  {
+    auto feedback = std::make_shared<visualization_msgs::msg::InteractiveMarkerFeedback>();
+    feedback->header = msg->header;
+    feedback->marker_name = name;
+    feedback->pose = msg->pose;
+    feedback->event_type = visualization_msgs::msg::InteractiveMarkerFeedback::POSE_UPDATE;
+    processInteractiveMarkerFeedback(feedback);
+    {
+      boost::unique_lock<boost::mutex> ulock(marker_access_lock_);
+      int_marker_server_->setPose(name, msg->pose, msg->header);  // move the interactive marker
+      int_marker_server_->applyChanges();
+    }
+  }
+}
+
 void RobotInteraction::processInteractiveMarkerFeedback(
-    visualization_msgs::msg::InteractiveMarkerFeedback::ConstSharedPtr feedback)
+    const visualization_msgs::msg::InteractiveMarkerFeedback::ConstSharedPtr& feedback)
 {
   // perform some validity checks
   boost::unique_lock<boost::mutex> ulock(marker_access_lock_);

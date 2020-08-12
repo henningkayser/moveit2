@@ -67,4 +67,4 @@ void addPositionControl(visualization_msgs::msg::InteractiveMarker& int_marker, 
 
 void addViewPlaneControl(visualization_msgs::msg::InteractiveMarker& int_marker, double radius,
                          const std_msgs::msg::ColorRGBA& color, bool position = true, bool orientation = true);
-}
+}  // namespace robot_interaction
