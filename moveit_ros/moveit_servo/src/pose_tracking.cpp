@@ -41,8 +41,6 @@ using namespace std::literals;
 namespace
 {
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("moveit_servo.pose_tracking");
-constexpr double DEFAULT_LOOP_RATE = 100;   // Hz
-constexpr double ROS_STARTUP_WAIT = 10;     // sec
 constexpr size_t LOG_THROTTLE_PERIOD = 10;  // sec
 }  // namespace
 
@@ -235,7 +233,7 @@ void PoseTracking::targetPoseCallback(const geometry_msgs::msg::PoseStamped::Con
     try
     {
       geometry_msgs::msg::TransformStamped target_to_planning_frame = transform_buffer_.lookupTransform(
-          planning_frame_, target_pose_.header.frame_id, rclcpp::Time(0), rclcpp::Duration(0.1));
+          planning_frame_, target_pose_.header.frame_id, rclcpp::Time(0), rclcpp::Duration(0));
       tf2::doTransform(target_pose_, target_pose_, target_to_planning_frame);
       target_pose_.header.stamp = node_->now();
     }

@@ -173,7 +173,7 @@ int main(int argc, char** argv)
     loop_rate.sleep();
   }
 
-  rclcpp::sleep_for(std::chrono::seconds(10));
+  rclcpp::sleep_for(std::chrono::seconds(5));
   RCLCPP_DEBUG_STREAM(LOGGER, "Timer expired and unfinished motion will be terminated");
 
   // Make sure the tracker is stopped and clean up
