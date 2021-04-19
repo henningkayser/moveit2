@@ -40,7 +40,6 @@
 
 #include <boost/optional.hpp>
 
-#include <eigen_conversions/eigen_msg.h>
 #include <geometry_msgs/msg/pose.hpp>
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <moveit/robot_model/robot_model.h>

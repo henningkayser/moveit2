@@ -36,6 +36,8 @@
 
 #include <stdexcept>
 
+#include <tf2_eigen/tf2_eigen.h>
+
 namespace pilz_industrial_motion_planner_testutils
 {
 CartesianConfiguration::CartesianConfiguration() : RobotConfiguration()
@@ -107,7 +109,7 @@ moveit_msgs::msg::RobotState CartesianConfiguration::toMoveitMsgsRobotState() co
 
   // set to Cartesian pose
   Eigen::Isometry3d start_pose;
-  tf::poseMsgToEigen(pose_, start_pose);
+  tf2::fromMsg(pose_, start_pose);
   if (!rstate.setFromIK(rstate.getRobotModel()->getJointModelGroup(group_name_), start_pose, link_name_))
   {
     std::ostringstream os;
