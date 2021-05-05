@@ -35,8 +35,6 @@
 #pragma once
 
 #include <Eigen/Geometry>
-// TODO(henning) remove?
-// #include <eigen_conversions/eigen_kdl.h>
 #include <tf2_eigen/tf2_eigen.h>
 #include <kdl/trajectory.hpp>
 #include <moveit/robot_model/robot_model.h>
