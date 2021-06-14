@@ -143,7 +143,17 @@ bool HybridPlanningManager::initialize()
   // Initialize global solution subscriber
   global_solution_sub_ = create_subscription<moveit_msgs::msg::MotionPlanResponse>(
       "global_trajectory", 1, [this](const moveit_msgs::msg::MotionPlanResponse::SharedPtr msg) {
-        planner_logic_instance_->react(moveit_hybrid_planning::BasicHybridPlanningEvent::GLOBAL_SOLUTION_AVAILABLE);
+        try
+        {
+          planner_logic_instance_->react(moveit_hybrid_planning::BasicHybridPlanningEvent::GLOBAL_SOLUTION_AVAILABLE);
+        }
+        catch (std::exception& ex)
+        {
+          RCLCPP_ERROR(
+              LOGGER,
+              "Hybrid Planning Manager failed to react to a published global planning solution. Error message: \"%s\"",
+              ex.what());
+        }
       });
   return true;
 }
@@ -172,8 +182,18 @@ bool HybridPlanningManager::planGlobalTrajectory()
   // Add result callback
   global_goal_options.result_callback =
       [this](const rclcpp_action::ClientGoalHandle<moveit_msgs::action::GlobalPlanner>::WrappedResult& result) {
-        planner_logic_instance_->react(
-            moveit_hybrid_planning::BasicHybridPlanningEvent::GLOBAL_PLANNING_ACTION_FINISHED);
+        try
+        {
+          planner_logic_instance_->react(
+              moveit_hybrid_planning::BasicHybridPlanningEvent::GLOBAL_PLANNING_ACTION_FINISHED);
+        }
+        catch (std::exception& ex)
+        {
+          RCLCPP_ERROR(
+              LOGGER,
+              "Hybrid Planning Manager failed to react to a global planning action result. Error message: \"%s\"",
+              ex.what());
+        }
       };
   // Forward global trajectory goal from hybrid planning request TODO(sjahr) pass goal as function argument
   auto global_goal_msg = moveit_msgs::action::GlobalPlanner::Goal();
@@ -211,13 +231,33 @@ bool HybridPlanningManager::runLocalPlanner()
   local_goal_options.feedback_callback =
       [this](rclcpp_action::ClientGoalHandle<moveit_msgs::action::LocalPlanner>::SharedPtr /*unused*/,
              const std::shared_ptr<const moveit_msgs::action::LocalPlanner::Feedback> local_planner_feedback) {
-        planner_logic_instance_->react(local_planner_feedback->feedback);
+        try
+        {
+          planner_logic_instance_->react(local_planner_feedback->feedback);
+        }
+        catch (std::exception& ex)
+        {
+          RCLCPP_ERROR(LOGGER,
+                       "Hybrid Planning Manager failed to react to local planner feedback. Error message: \"%s\"",
+                       ex.what());
+        }
       };
 
   // Add result callback to print the result
   local_goal_options.result_callback =
       [this](const rclcpp_action::ClientGoalHandle<moveit_msgs::action::LocalPlanner>::WrappedResult& result) {
-        planner_logic_instance_->react(moveit_hybrid_planning::BasicHybridPlanningEvent::LOCAL_PLANNING_ACTION_FINISHED);
+        try
+        {
+          planner_logic_instance_->react(
+              moveit_hybrid_planning::BasicHybridPlanningEvent::LOCAL_PLANNING_ACTION_FINISHED);
+        }
+        catch (std::exception& ex)
+        {
+          RCLCPP_ERROR(
+              LOGGER,
+              "Hybrid Planning Manager failed to react to a local planning action result. Error message: \"%s\"",
+              ex.what());
+        }
       };
 
   // Send global planning goal
@@ -233,7 +273,16 @@ void HybridPlanningManager::hybridPlanningRequestCallback(
   latest_hybrid_planning_goal_ = (hybrid_planning_goal_handle_->get_goal())->request;
 
   // React on incoming planning request
-  planner_logic_instance_->react(moveit_hybrid_planning::BasicHybridPlanningEvent::HYBRID_PLANNING_REQUEST_RECEIVED);
+  try
+  {
+    planner_logic_instance_->react(moveit_hybrid_planning::BasicHybridPlanningEvent::HYBRID_PLANNING_REQUEST_RECEIVED);
+  }
+  catch (std::exception& ex)
+  {
+    RCLCPP_ERROR(LOGGER,
+                 "Hybrid Planning Manager failed to react an incoming hybrid planning request. Error message: \"%s\"",
+                 ex.what());
+  }
 }
 
 void HybridPlanningManager::sendHybridPlanningResponse(bool success)

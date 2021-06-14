@@ -67,14 +67,14 @@ public:
    * @param event Basic hybrid planning event
    * @return true if reaction was successful
    */
-  virtual bool react(BasicHybridPlanningEvent event) = 0;
+  virtual void react(BasicHybridPlanningEvent event) = 0;
 
   /**
    * React to custom event
    * @param event Encoded as string
    * @return true if reaction was successful
    */
-  virtual bool react(const std::string& event) = 0;
+  virtual void react(const std::string& event) = 0;
   virtual ~PlannerLogicInterface(){};
 
 protected:

@@ -49,7 +49,7 @@ bool SinglePlanExecution::initialize(
   return true;
 }
 
-bool SinglePlanExecution::react(BasicHybridPlanningEvent event)
+void SinglePlanExecution::react(BasicHybridPlanningEvent event)
 {
   switch (event)
   {
@@ -74,13 +74,10 @@ bool SinglePlanExecution::react(BasicHybridPlanningEvent event)
       // Do nothing
       break;
   }
-  return true;
 }
-bool SinglePlanExecution::react(const std::string& event)
+void SinglePlanExecution::react(const std::string& event)
 {
-  auto& clock = *hybrid_planning_manager_->get_clock();
-  RCLCPP_INFO_THROTTLE(LOGGER, clock, 1000, event.c_str());
-  return true;
+  throw std::runtime_error("\'Single-Plan-Execution\' planning logic plugin does not handle string events");
 };
 }  // namespace moveit_hybrid_planning
 
