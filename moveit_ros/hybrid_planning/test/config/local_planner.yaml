@@ -11,4 +11,4 @@ local_solution_topic_type: "std_msgs/Float64MultiArray" # or trajectory_msgs/Joi
 pass_through: false
 
 # ForwardTrajectory param
-stop_before_collision: false
+stop_before_collision: true

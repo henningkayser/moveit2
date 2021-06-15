@@ -78,7 +78,7 @@ bool HybridPlanningManager::initialize()
   }
   catch (pluginlib::PluginlibException& ex)
   {
-    RCLCPP_FATAL(LOGGER, "Exception while creating planner logic plugin loader %s", ex.what());
+    RCLCPP_FATAL(LOGGER, "Exception while creating planner logic plugin loader \'%s\'", ex.what());
   }
   // TODO(sjahr) Refactor parameter declaration and use repository wide solution
   std::string logic_plugin_name = "";
@@ -98,11 +98,11 @@ bool HybridPlanningManager::initialize()
     {
       throw std::runtime_error("Unable to initialize planner logic plugin");
     }
-    RCLCPP_INFO(LOGGER, "Using planner logic interface '%s'", logic_plugin_name.c_str());
+    RCLCPP_INFO(LOGGER, "Using planner logic interface \'%s\'", logic_plugin_name.c_str());
   }
   catch (pluginlib::PluginlibException& ex)
   {
-    RCLCPP_ERROR(LOGGER, "Exception while loading planner logic '%s': %s", logic_plugin_name.c_str(), ex.what());
+    RCLCPP_ERROR(LOGGER, "Exception while loading planner logic \'%s\': \'%s\'", logic_plugin_name.c_str(), ex.what());
   }
 
   // Initialize local planning action client
@@ -151,7 +151,7 @@ bool HybridPlanningManager::initialize()
         {
           RCLCPP_ERROR(
               LOGGER,
-              "Hybrid Planning Manager failed to react to a published global planning solution. Error message: \"%s\"",
+              "Hybrid Planning Manager failed to react to a published global planning solution. Error message: \'%s\'",
               ex.what());
         }
       });
@@ -160,7 +160,6 @@ bool HybridPlanningManager::initialize()
 
 bool HybridPlanningManager::planGlobalTrajectory()
 {
-  RCLCPP_INFO(LOGGER, "START PLANNING");
   auto global_goal_options = rclcpp_action::Client<moveit_msgs::action::GlobalPlanner>::SendGoalOptions();
 
   // Add goal response callback
@@ -191,7 +190,7 @@ bool HybridPlanningManager::planGlobalTrajectory()
         {
           RCLCPP_ERROR(
               LOGGER,
-              "Hybrid Planning Manager failed to react to a global planning action result. Error message: \"%s\"",
+              "Hybrid Planning Manager failed to react to a global planning action result. Error message: \'%s\'",
               ex.what());
         }
       };
@@ -238,7 +237,7 @@ bool HybridPlanningManager::runLocalPlanner()
         catch (std::exception& ex)
         {
           RCLCPP_ERROR(LOGGER,
-                       "Hybrid Planning Manager failed to react to local planner feedback. Error message: \"%s\"",
+                       "Hybrid Planning Manager failed to react to local planner feedback. Error message: \'%s\'",
                        ex.what());
         }
       };
@@ -255,7 +254,7 @@ bool HybridPlanningManager::runLocalPlanner()
         {
           RCLCPP_ERROR(
               LOGGER,
-              "Hybrid Planning Manager failed to react to a local planning action result. Error message: \"%s\"",
+              "Hybrid Planning Manager failed to react to a local planning action result. Error message: \'%s\'",
               ex.what());
         }
       };
@@ -280,7 +279,7 @@ void HybridPlanningManager::hybridPlanningRequestCallback(
   catch (std::exception& ex)
   {
     RCLCPP_ERROR(LOGGER,
-                 "Hybrid Planning Manager failed to react an incoming hybrid planning request. Error message: \"%s\"",
+                 "Hybrid Planning Manager failed to react an incoming hybrid planning request. Error message: \'%s\'",
                  ex.what());
   }
 }

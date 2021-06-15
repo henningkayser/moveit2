@@ -112,7 +112,7 @@ bool LocalPlannerComponent::initialize()
   }
   catch (pluginlib::PluginlibException& ex)
   {
-    RCLCPP_FATAL(LOGGER, "Exception while creating trajectory operator plugin loader %s", ex.what());
+    RCLCPP_FATAL(LOGGER, "Exception while creating trajectory operator plugin loader: \'%s\'", ex.what());
   }
   try
   {
@@ -121,11 +121,11 @@ bool LocalPlannerComponent::initialize()
     if (!trajectory_operator_instance_->initialize(node_ptr, planning_scene_monitor_->getRobotModel(),
                                                    "panda_arm"))  // TODO(sjahr) add default group param
       throw std::runtime_error("Unable to initialize trajectory operator plugin");
-    RCLCPP_INFO(LOGGER, "Using trajectory operator interface '%s'", config_.trajectory_operator_plugin_name.c_str());
+    RCLCPP_INFO(LOGGER, "Using trajectory operator interface \'%s\'", config_.trajectory_operator_plugin_name.c_str());
   }
   catch (pluginlib::PluginlibException& ex)
   {
-    RCLCPP_ERROR(LOGGER, "Exception while loading trajectory operator '%s': %s",
+    RCLCPP_ERROR(LOGGER, "Exception while loading trajectory operator \'%s\': \'%s\'",
                  config_.trajectory_operator_plugin_name.c_str(), ex.what());
   }
 
@@ -138,7 +138,7 @@ bool LocalPlannerComponent::initialize()
   }
   catch (pluginlib::PluginlibException& ex)
   {
-    RCLCPP_FATAL(LOGGER, "Exception while creating constraint solver plugin loader %s", ex.what());
+    RCLCPP_FATAL(LOGGER, "Exception while creating constraint solver plugin loader \'%s\'", ex.what());
   }
   try
   {
@@ -146,11 +146,11 @@ bool LocalPlannerComponent::initialize()
         local_constraint_solver_plugin_loader_->createUniqueInstance(config_.local_constraint_solver_plugin_name);
     if (!local_constraint_solver_instance_->initialize(node_ptr, planning_scene_monitor_, "panda_arm"))
       throw std::runtime_error("Unable to initialize constraint solver plugin");
-    RCLCPP_INFO(LOGGER, "Using constraint solver interface '%s'", config_.local_constraint_solver_plugin_name.c_str());
+    RCLCPP_INFO(LOGGER, "Using constraint solver interface \'%s\'", config_.local_constraint_solver_plugin_name.c_str());
   }
   catch (pluginlib::PluginlibException& ex)
   {
-    RCLCPP_ERROR(LOGGER, "Exception while loading constraint solver '%s': %s",
+    RCLCPP_ERROR(LOGGER, "Exception while loading constraint solver \'%s\': \'%s\'",
                  config_.local_constraint_solver_plugin_name.c_str(), ex.what());
   }
 
@@ -194,7 +194,7 @@ bool LocalPlannerComponent::initialize()
       });
 
   // Initialize local solution publisher
-  RCLCPP_INFO(LOGGER, "Using '%s' as local solution topic type", config_.local_solution_topic_type.c_str());
+  RCLCPP_INFO(LOGGER, "Using \'%s\' as local solution topic type", config_.local_solution_topic_type.c_str());
   if (config_.local_solution_topic_type == "trajectory_msgs/JointTrajectory")
   {
     local_trajectory_publisher_ =

@@ -137,15 +137,15 @@ bool GlobalPlannerComponent::init()
   {
     if (planning_pipelines_.count(planning_pipeline_name) > 0)
     {
-      RCLCPP_WARN(LOGGER, "Skipping duplicate entry for planning pipeline '%s'.", planning_pipeline_name.c_str());
+      RCLCPP_WARN(LOGGER, "Skipping duplicate entry for planning pipeline \'%s\'.", planning_pipeline_name.c_str());
       continue;
     }
-    RCLCPP_INFO(LOGGER, "Loading planning pipeline '%s'", planning_pipeline_name.c_str());
+    RCLCPP_INFO(LOGGER, "Loading planning pipeline \'%s\'", planning_pipeline_name.c_str());
     auto pipeline = std::make_shared<planning_pipeline::PlanningPipeline>(
         robot_model_, node_ptr, planning_pipeline_name, PLANNING_PLUGIN_PARAM);
     if (!pipeline->getPlannerManager())
     {
-      RCLCPP_ERROR(LOGGER, "Failed to initialize planning pipeline '%s'.", planning_pipeline_name.c_str());
+      RCLCPP_ERROR(LOGGER, "Failed to initialize planning pipeline \'%s\'.", planning_pipeline_name.c_str());
       continue;
     }
     planning_pipelines_[planning_pipeline_name] = pipeline;
@@ -164,7 +164,6 @@ void GlobalPlannerComponent::globalPlanningRequestCallback(
   const auto goal = goal_handle->get_goal();
 
   // Plan global trajectory
-  RCLCPP_INFO(LOGGER, "Start global planning");
   moveit_msgs::msg::MotionPlanResponse planning_solution = plan(goal->request);
 
   // Publish global planning solution to the local planner
