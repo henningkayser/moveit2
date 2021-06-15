@@ -77,7 +77,9 @@ void SinglePlanExecution::react(BasicHybridPlanningEvent event)
 }
 void SinglePlanExecution::react(const std::string& event)
 {
-  throw std::runtime_error("\'Single-Plan-Execution\' planning logic plugin does not handle string events");
+  RCLCPP_WARN(LOGGER,
+              "\'Single-Plan-Execution\' planning logic plugin does not react to string events. Received event: \'%s\'",
+              event.c_str());
 };
 }  // namespace moveit_hybrid_planning
 
