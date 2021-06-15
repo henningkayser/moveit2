@@ -91,7 +91,7 @@ SimpleSampler::getLocalTrajectory(const moveit::core::RobotState& current_state,
   if (pass_through_)
   {
     // Use reference_trajectory as local trajectory
-    local_trajectory.swap(*reference_trajectory_);
+    local_trajectory = robot_trajectory::RobotTrajectory(*reference_trajectory_);
   }
   else
   {
