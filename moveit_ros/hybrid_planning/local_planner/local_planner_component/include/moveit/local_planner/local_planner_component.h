@@ -76,7 +76,7 @@ void declareOrGetParam(const std::string& param_name, T& output_value, const T& 
   catch (const rclcpp::exceptions::InvalidParameterTypeException& e)
   {
     RCLCPP_ERROR_STREAM(node->get_logger(),
-                        "Error getting parameter \'" << param_name << "\', check parameter type in YAML file");
+                        "Error getting parameter '" << param_name << "', check parameter type in YAML file");
     throw e;
   }
 }

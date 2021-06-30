@@ -78,7 +78,7 @@ void SinglePlanExecution::react(BasicHybridPlanningEvent event)
 void SinglePlanExecution::react(const std::string& event)
 {
   RCLCPP_WARN(LOGGER,
-              "\'Single-Plan-Execution\' planning logic plugin does not react to string events. Received event: \'%s\'",
+              "'Single-Plan-Execution' planning logic plugin does not react to string events. Received event: '%s'",
               event.c_str());
 };
 }  // namespace moveit_hybrid_planning

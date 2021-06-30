@@ -52,7 +52,7 @@ void ReplanInvalidatedTrajectory::react(const std::string& event)
   }
   else if (!event.empty())
   {
-    throw std::runtime_error("Received unkown event: \'" + std::string(event.c_str()) + "\'");
+    throw std::runtime_error("Received unkown event: '" + std::string(event.c_str()) + "'");
   }
 };
 }  // namespace moveit_hybrid_planning
