@@ -105,6 +105,7 @@ public:
     void load(const rclcpp::Node::SharedPtr& node)
     {
       std::string undefined = "<undefined>";
+      declareOrGetParam<std::string>("group_name", group_name, undefined, node);
       declareOrGetParam<std::string>("trajectory_operator_plugin_name", trajectory_operator_plugin_name, undefined,
                                      node);
       declareOrGetParam<std::string>("local_constraint_solver_plugin_name", local_constraint_solver_plugin_name,
@@ -115,6 +116,7 @@ public:
       declareOrGetParam<std::string>("local_solution_topic_type", local_solution_topic_type, undefined, node);
     }
 
+    std::string group_name;
     std::string robot_description;
     std::string robot_description_semantic;
     std::string publish_planning_scene_topic;

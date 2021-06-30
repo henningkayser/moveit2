@@ -119,7 +119,7 @@ bool LocalPlannerComponent::initialize()
     trajectory_operator_instance_ =
         trajectory_operator_loader_->createUniqueInstance(config_.trajectory_operator_plugin_name);
     if (!trajectory_operator_instance_->initialize(node_ptr, planning_scene_monitor_->getRobotModel(),
-                                                   "panda_arm"))  // TODO(sjahr) add default group param
+                                                   config_.group_name))  // TODO(sjahr) add default group param
       throw std::runtime_error("Unable to initialize trajectory operator plugin");
     RCLCPP_INFO(LOGGER, "Using trajectory operator interface \'%s\'", config_.trajectory_operator_plugin_name.c_str());
   }
@@ -144,7 +144,7 @@ bool LocalPlannerComponent::initialize()
   {
     local_constraint_solver_instance_ =
         local_constraint_solver_plugin_loader_->createUniqueInstance(config_.local_constraint_solver_plugin_name);
-    if (!local_constraint_solver_instance_->initialize(node_ptr, planning_scene_monitor_, "panda_arm"))
+    if (!local_constraint_solver_instance_->initialize(node_ptr, planning_scene_monitor_, config_.group_name))
       throw std::runtime_error("Unable to initialize constraint solver plugin");
     RCLCPP_INFO(LOGGER, "Using constraint solver interface \'%s\'", config_.local_constraint_solver_plugin_name.c_str());
   }
@@ -268,7 +268,7 @@ void LocalPlannerComponent::executePlanningLoopRun()
 
       // Get local goal trajectory to follow
       robot_trajectory::RobotTrajectory local_trajectory =
-          robot_trajectory::RobotTrajectory(planning_scene_monitor_->getRobotModel(), "panda_arm");
+          robot_trajectory::RobotTrajectory(planning_scene_monitor_->getRobotModel(), config_.group_name);
       *local_planner_feedback_ =
           trajectory_operator_instance_->getLocalTrajectory(current_robot_state, local_trajectory);
       if (!local_planner_feedback_->feedback.empty())
