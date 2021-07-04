@@ -41,7 +41,7 @@ namespace moveit_hybrid_planning
 {
 const rclcpp::Logger LOGGER = rclcpp::get_logger("hybrid_planning_manager");
 
-void ReplanInvalidatedTrajectory::react(const std::string& event)
+ReactionResult ReplanInvalidatedTrajectory::react(const std::string& event)
 {
   if (event == "collision_ahead")
   {
@@ -49,10 +49,12 @@ void ReplanInvalidatedTrajectory::react(const std::string& event)
     {
       hybrid_planning_manager_->sendHybridPlanningResponse(false);
     }
+    return ReactionResult(event, "", moveit_msgs::msg::MoveItErrorCodes::SUCCESS);
   }
-  else if (!event.empty())
+  else
   {
-    throw std::runtime_error("Received unkown event: '" + std::string(event.c_str()) + "'");
+    return ReactionResult(event, "'ReplanInvalidatedTrajectory' plugin cannot handle this event.",
+                          moveit_msgs::msg::MoveItErrorCodes::FAILURE);
   }
 };
 }  // namespace moveit_hybrid_planning
