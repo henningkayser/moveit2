@@ -167,7 +167,8 @@ void GlobalPlannerComponent::globalPlanningRequestCallback(
   moveit_msgs::msg::MotionPlanResponse planning_solution = plan(goal->request);
 
   // Publish global planning solution to the local planner
-  this->global_trajectory_pub_->publish(planning_solution);
+  if (planning_solution.error_code.val == moveit_msgs::msg::MoveItErrorCodes::SUCCESS)
+    global_trajectory_pub_->publish(planning_solution);
 
   // Send action response
   auto result = std::make_shared<moveit_msgs::action::GlobalPlanner::Result>();
