@@ -58,7 +58,7 @@ HybridPlanningManager::HybridPlanningManager(const rclcpp::NodeOptions& options)
     {
       if (!this->initialize())
       {
-        const std::string error = "Failed to initialize global planner";
+        const std::string error = "Failed to initialize hybrid planner";
         timer_->cancel();
         throw std::runtime_error(error);
       }
