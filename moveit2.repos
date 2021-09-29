@@ -9,8 +9,8 @@ repositories:
     version: ros2
   warehouse_ros:
     type: git
-    url: https://github.com/ros-planning/warehouse_ros
-    version: ros2
+    url: https://github.com/gleichdick/warehouse_ros
+    version: fix-openssl
   warehouse_ros_mongo:
     type: git
     url: https://github.com/ros-planning/warehouse_ros_mongo
